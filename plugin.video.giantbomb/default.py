@@ -119,6 +119,17 @@ def list_categories():
         xbmcplugin.addDirectoryItem(handle=addon_id, url=url, listitem=li,
                                     totalItems=total)
 
+    # Add Giant Bomb Infinite
+    total += 1
+    name = "Giant Bomb Infinite"
+    url = "plugin://plugin.video.twitch/?mode=play&channel_name=giantbomb8"
+    thumbnail = xbmc.translatePath('special://home/addons/{0!s}/infinite.png'.format(xbmcaddon.Addon().getAddonInfo('id'))).decode('utf-8')
+    li = xbmcgui.ListItem(name, iconImage='DefaultVideo.png', thumbnailImage=thumbnail)
+    li.setProperty('IsPlayable', 'true')
+    li.setProperty('fanart_image', my_addon.getAddonInfo('fanart'))
+    xbmcplugin.addDirectoryItem(handle=addon_id, url=url, listitem=li,
+                                totalItems=total)
+
     # Add the "Latest" pseudo-category
     url = handler.build_url({ 'mode': 'videos' })
     li = xbmcgui.ListItem('Latest', iconImage='DefaultFolder.png')
