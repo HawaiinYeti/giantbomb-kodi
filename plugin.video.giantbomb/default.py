@@ -138,6 +138,14 @@ def list_categories():
                                 listitem=li, isFolder=True,
                                 totalItems=total)
 
+    # Add the "Shows" pseudo-category
+    url = handler.build_url({ 'mode': 'video_shows' })
+    li = xbmcgui.ListItem('Shows', iconImage='DefaultFolder.png')
+    li.setProperty('fanart_image', my_addon.getAddonInfo('fanart'))
+    xbmcplugin.addDirectoryItem(handle=addon_id, url=url,
+                                listitem=li, isFolder=True,
+                                totalItems=total)
+
     # Add all the real categories
     for category in data['results']:
         name = category['name']
@@ -342,6 +350,26 @@ def endurance(gb_filter):
             'gb_filter': '{0},name:{1}'.format(gb_filter, run)
         })
         li = xbmcgui.ListItem(run, iconImage='DefaultFolder.png')
+        xbmcplugin.addDirectoryItem(handle=addon_id, url=url,
+                                    listitem=li, isFolder=True)
+    xbmcplugin.endOfDirectory(addon_id)
+
+
+@handler.page
+def video_shows():
+    """Show the list of Shows."""
+
+    results = gb.query('video_shows', {'sort' : 'title:asc'}).get('results')
+
+    for show in results:
+        url = handler.build_url({
+            'mode': 'videos',
+            'gb_filter': 'video_show:{0}'.format(show['id'])
+        })
+        li = xbmcgui.ListItem(show['title'], iconImage=show['image'].get('screen_large_url','DefaultFolder.png'))
+        li.setInfo('video', infoLabels={
+            'plot': show['deck'],
+        })
         xbmcplugin.addDirectoryItem(handle=addon_id, url=url,
                                     listitem=li, isFolder=True)
     xbmcplugin.endOfDirectory(addon_id)
