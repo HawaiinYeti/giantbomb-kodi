@@ -1,6 +1,6 @@
 import re
 import urllib
-import urlparse
+import urllib.parse
 
 
 class RequestHandler(object):
@@ -45,7 +45,7 @@ class RequestHandler(object):
         :param query: A dict of the query arguments for the URL
         :return: The built URL"""
 
-        return self._base_url + '?' + urllib.urlencode(query)
+        return self._base_url + '?' + urllib.parse.urlencode(query)
 
     def run(self, arguments):
         """Run the request handler and dispatch to the appropiate handler
@@ -54,7 +54,7 @@ class RequestHandler(object):
 
         :param arguments: The arguments to the add-on (usually sys.argv[2])"""
 
-        params = dict(urlparse.parse_qsl( re.sub(r'^\?', '', arguments) ))
+        params = dict(urllib.parse.parse_qsl( re.sub(r'^\?', '', arguments) ))
         mode = params.pop('mode', None)
         if mode is None:
             self._default_mode_mapping(**params)

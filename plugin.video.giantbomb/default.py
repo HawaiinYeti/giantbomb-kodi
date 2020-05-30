@@ -112,8 +112,8 @@ def list_categories():
         name = "LIVE: " + live_data['video']['title']
         url = live_data['video']['stream']
         thumb = "https://" + live_data['video']['image']
-        li = xbmcgui.ListItem(name, iconImage='DefaultVideo.png',
-                              thumbnailImage=thumb)
+        li = xbmcgui.ListItem(name)
+        li.setArt({ 'icon': 'DefaultVideo.png', 'thumb': thumb})
         li.setProperty('IsPlayable', 'true')
         li.setProperty('fanart_image', my_addon.getAddonInfo('fanart'))
         xbmcplugin.addDirectoryItem(handle=addon_id, url=url, listitem=li,
@@ -123,8 +123,9 @@ def list_categories():
     total += 1
     name = "Giant Bomb Infinite"
     url = "plugin://plugin.video.twitch/?mode=play&channel_name=giantbomb8"
-    thumbnail = xbmc.translatePath('special://home/addons/{0!s}/infinite.png'.format(xbmcaddon.Addon().getAddonInfo('id'))).decode('utf-8')
-    li = xbmcgui.ListItem(name, iconImage='DefaultVideo.png', thumbnailImage=thumbnail)
+    thumbnail = xbmc.translatePath('special://home/addons/{0!s}/infinite.png'.format(xbmcaddon.Addon().getAddonInfo('id')))
+    li = xbmcgui.ListItem(name)
+    li.setArt({ 'icon': 'DefaultVideo.png', 'thumb': thumbnail })
     li.setProperty('IsPlayable', 'true')
     li.setProperty('fanart_image', my_addon.getAddonInfo('fanart'))
     xbmcplugin.addDirectoryItem(handle=addon_id, url=url, listitem=li,
@@ -132,7 +133,8 @@ def list_categories():
 
     # Add the "Latest" pseudo-category
     url = handler.build_url({ 'mode': 'videos' })
-    li = xbmcgui.ListItem('Latest', iconImage='DefaultFolder.png')
+    li = xbmcgui.ListItem('Latest')
+    li.setArt({ 'icon': 'DefaultFolder.png' })
     li.setProperty('fanart_image', my_addon.getAddonInfo('fanart'))
     xbmcplugin.addDirectoryItem(handle=addon_id, url=url,
                                 listitem=li, isFolder=True,
@@ -140,7 +142,8 @@ def list_categories():
 
     # Add the "Shows" pseudo-category
     url = handler.build_url({ 'mode': 'video_shows' })
-    li = xbmcgui.ListItem('Shows', iconImage='DefaultFolder.png')
+    li = xbmcgui.ListItem('Shows')
+    li.setArt({ 'icon': 'DefaultFolder.png' })
     li.setProperty('fanart_image', my_addon.getAddonInfo('fanart'))
     xbmcplugin.addDirectoryItem(handle=addon_id, url=url,
                                 listitem=li, isFolder=True,
@@ -154,7 +157,8 @@ def list_categories():
             'mode': mode,
             'gb_filter': 'video_type:{0}'.format(category['id'])
         })
-        li = xbmcgui.ListItem(category['name'], iconImage='DefaultFolder.png')
+        li = xbmcgui.ListItem(category['name'])
+        li.setArt({ 'icon': 'DefaultFolder.png' })
         li.setProperty('fanart_image', my_addon.getAddonInfo('fanart'))
         xbmcplugin.addDirectoryItem(handle=addon_id, url=url,
                                     listitem=li, isFolder=True,
@@ -162,7 +166,8 @@ def list_categories():
 
     # Add the "Search" pseudo-category
     url = handler.build_url({ 'mode': 'search' })
-    li = xbmcgui.ListItem('Search', iconImage='DefaultFolder.png')
+    li = xbmcgui.ListItem('Search')
+    li.setArt({ 'icon': 'DefaultFolder.png' })
     li.setProperty('fanart_image', my_addon.getAddonInfo('fanart'))
     xbmcplugin.addDirectoryItem(handle=addon_id, url=url,
                                 listitem=li, isFolder=True,
@@ -222,8 +227,8 @@ def list_videos(data, page, gb_filter=None):
         url = handler.build_url(dict(
             page=page - 1, update_listing=True, **plugin_params
         ))
-        li = xbmcgui.ListItem('Previous Page ({0})'.format(page),
-                              iconImage='DefaultFolder.png')
+        li = xbmcgui.ListItem('Previous Page ({0})'.format(page))
+        li.setArt({ 'icon': 'DefaultFolder.png' })
         li.addContextMenuItems(page_context)
         li.setProperty('fanart_image', my_addon.getAddonInfo('fanart'))
         xbmcplugin.addDirectoryItem(handle=addon_id, url=url, listitem=li,
@@ -242,8 +247,9 @@ def list_videos(data, page, gb_filter=None):
         if thumb[0] == '/':
             thumb = 'http://static.giantbomb.com' + thumb
 
-        li = xbmcgui.ListItem(name, iconImage='DefaultVideo.png',
-                              thumbnailImage=thumb)
+        li = xbmcgui.ListItem(name)
+        li.setArt({ 'icon': 'DefaultVideo.png', 'thumb': thumb })
+
         li.addStreamInfo('video', { 'duration': duration })
         li.setInfo('video', infoLabels={
             'title': name,
@@ -273,8 +279,8 @@ def list_videos(data, page, gb_filter=None):
             page=page + 1, update_listing=True, **plugin_params
         ))
 
-        li = xbmcgui.ListItem('Next Page ({0})'.format(page + 2),
-                              iconImage='DefaultFolder.png')
+        li = xbmcgui.ListItem('Next Page ({0})'.format(page + 2))
+        li.setArt({ 'icon': 'DefaultFolder.png' })
         li.addContextMenuItems(page_context)
         li.setProperty('fanart_image', my_addon.getAddonInfo('fanart'))
         xbmcplugin.addDirectoryItem(handle=addon_id, url=url, listitem=li,
@@ -349,7 +355,8 @@ def endurance(gb_filter):
             'mode': 'videos', 'page': 'all',
             'gb_filter': '{0},name:{1}'.format(gb_filter, run)
         })
-        li = xbmcgui.ListItem(run, iconImage='DefaultFolder.png')
+        li = xbmcgui.ListItem(run)
+        li.setArt({ 'icon': 'DefaultFolder.png' })
         xbmcplugin.addDirectoryItem(handle=addon_id, url=url,
                                     listitem=li, isFolder=True)
     xbmcplugin.endOfDirectory(addon_id)
@@ -366,7 +373,9 @@ def video_shows():
             'mode': 'videos',
             'gb_filter': 'video_show:{0}'.format(show['id'])
         })
-        li = xbmcgui.ListItem(show['title'], iconImage=show['image'].get('screen_large_url','DefaultFolder.png'))
+        li = xbmcgui.ListItem(show['title'])
+        li.setArt({ 'icon': show['image'].get('screen_large_url','DefaultFolder.png') })
+
         li.setInfo('video', infoLabels={
             'plot': show['deck'],
         })
@@ -458,8 +467,8 @@ def list_podcasts():
     for cast in podcasts:
         url = handler.build_url({'mode': 'podcast', 'podcast_id': cast['id']})
         image = cache.get(cast['id'], '')
-        li = xbmcgui.ListItem(cast['name'], thumbnailImage=image,
-                              iconImage='DefaultFolder.png')
+        li = xbmcgui.ListItem(cast['name'])
+        li.setArt({ 'icon': 'DefaultFolder.png', 'thumb': image })
         xbmcplugin.addDirectoryItem(handle=addon_id, url=url,
                                     listitem=li, isFolder=True)
     xbmcplugin.endOfDirectory(addon_id)
@@ -490,8 +499,9 @@ def podcast(podcast_id):
                              '%a, %d %b %Y %H:%M:%S')
         url = handler.build_url({ 'mode': 'play_audio', 'url': item['url'] })
 
-        li = xbmcgui.ListItem(item['title'], iconImage='DefaultVideo.png',
-                              thumbnailImage=item['image'] or '', path=url)
+        li = xbmcgui.ListItem(item['title'], path=url)
+        li.setArt({ 'icon': 'DefaultVideo.png', 'thumb': item['image'] or '' })
+
         li.setProperty('IsPlayable', 'true')
         li.setInfo('music', infoLabels={
             'title': item['title'],

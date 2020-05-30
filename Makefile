@@ -1,6 +1,6 @@
 KODI_PROFILE?=$(HOME)/.kodi
 ADDON_NAME=plugin.video.giantbomb
-ADDON_VERSION=5.0pre
+ADDON_VERSION=5.1
 ADDON_INSTALL_DIR=$(KODI_PROFILE)/addons/$(ADDON_NAME)
 
 .PHONY: uninstall-dev

@@ -1,6 +1,6 @@
 import json
 import urllib
-import urllib2
+import urllib.request
 
 
 class APIError(Exception):
@@ -79,7 +79,7 @@ class GiantBomb(object):
         return self.fetch('{base}/{resource}?{query}'.format(
             base=self.api_path,
             resource=resource,
-            query=urllib.urlencode(full_query),
+            query=urllib.parse.urlencode(full_query),
         ), retry=retry)
 
     def fetch(self, url, retry=True):
@@ -110,7 +110,7 @@ class GiantBomb(object):
         :param url: The URL to fetch
         :return: A dict with the response data from the API"""
 
-        data = json.loads(urllib2.urlopen(url).read())
+        data = json.loads(urllib.request.urlopen(url).read())
         status = data.get('status_code', 1)
 
         if status == 1:

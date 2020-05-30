@@ -3,7 +3,7 @@ import time
 import urllib
 
 
-def _trymakedirs(path, mode=0777):
+def _trymakedirs(path, mode=0o777):
     """Try to recursively create directories using os.makedirs. If the directory
     already exists, do nothing. This is equivalent to
     os.makedirs(path, mode, exist_ok=True) in Python 3.2+.
@@ -12,7 +12,7 @@ def _trymakedirs(path, mode=0777):
     :param mode: The directory's mode."""
     try:
         os.makedirs(path)
-    except OSError, e:
+    except (OSError, e):
         if e.errno != 17 or not os.path.isdir(path):
             raise
 

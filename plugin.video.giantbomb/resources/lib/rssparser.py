@@ -1,4 +1,4 @@
-import urllib2
+import urllib.request
 import xml.etree.ElementTree
 
 namespaces = { 'itunes': 'http://www.itunes.com/dtds/podcast-1.0.dtd' }
@@ -12,7 +12,7 @@ class RSSParser(object):
 
         :param url: The URL for the RSS feed."""
 
-        f = urllib2.urlopen(url)
+        f = urllib.request.urlopen(url)
         self._tree = xml.etree.ElementTree.parse(f)
         f.close()
 
